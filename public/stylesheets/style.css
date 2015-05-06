@@ -1,0 +1,13 @@
+body {
+    padding: 55px 0px 20px;
+    font: 14px"Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+    color: #777;
+}
+a:hover {
+    text-decoration: none;
+}
+.navbar {
+    margin-bottom: 0px;
+}
