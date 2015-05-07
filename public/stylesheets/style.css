@@ -1,5 +1,5 @@
 body {
-    padding: 55px 0px 20px;
+    padding: 54px 0px 20px;
     font: 14px"Lucida Grande", Helvetica, Arial, sans-serif;
 }
 a {
@@ -10,4 +10,19 @@ a:hover {
 }
 .navbar {
     margin-bottom: 0px;
+}
+.navbar-default{
+    background: #337ab7;
+}
+
+.navbar-default .navbar-nav>li>a{
+    font-size: 16px;
+    color: #fff;
+}
+
+#cnzz_stat_icon_1254960064{
+    width: 0px;
+    height: 0px;
+    display: block;
+    overflow: hidden;
 }
