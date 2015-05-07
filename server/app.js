@@ -13,7 +13,7 @@ var classroom = require('./routes/class');
 var calendar = require('./routes/calendar');
 var calresult=require('./routes/calresult');
 var callback=require('./routes/callback');
-var logoin=require('./routes/login');
+var login=require('./routes/login');
 
 var app = express();
 
@@ -39,7 +39,7 @@ app.use('/class', classroom);
 app.use('/calendar', calendar);
 app.use('/calendarresult', calresult);
 app.use('/callback',callback);
-app.use('/login',logoin);
+app.use('/login',login);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
