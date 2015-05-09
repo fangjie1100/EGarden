@@ -14,6 +14,8 @@ var calendar = require('./routes/calendar');
 var calresult=require('./routes/calresult');
 var callback=require('./routes/callback');
 var login=require('./routes/login');
+var about=require('./routes/about');
+var register=require('./routes/register');
 
 var app = express();
 
@@ -22,13 +24,14 @@ app.set('views', path.join(__dirname, '/../public/views'));
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 
-// uncomment after placing your favicon in /public
+//uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/../public')));
 app.use('/bower_components', express.static(path.join(__dirname, '/../bower_components')));
@@ -40,6 +43,8 @@ app.use('/calendar', calendar);
 app.use('/calendarresult', calresult);
 app.use('/callback',callback);
 app.use('/login',login);
+app.use('/about',about);
+app.use('/register',register);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

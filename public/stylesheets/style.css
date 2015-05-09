@@ -14,20 +14,20 @@ a:hover {
 .navbar-default{
     background: #337ab7;
 }
-
+.navbar .navbar-brand{
+    color:yellowgreen;
+}
 .navbar-default .navbar-nav>li>a{
     font-size: 16px;
     color: #fff;
 }
 footer{
-    padding: 8px 0 0 0;
+    padding: 8px 0 0;
 }
-
 footer,footer a{
     font-size: 16px;
      color: #fff;
 }
-
 #cnzz_stat_icon_1254960064{
     width: 1px;
     height: 1px;
