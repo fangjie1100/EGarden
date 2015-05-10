@@ -16,6 +16,7 @@ var callback=require('./routes/callback');
 var login=require('./routes/login');
 var about=require('./routes/about');
 var register=require('./routes/register');
+var teachers=require('./routes/teachers');
 
 var app = express();
 
@@ -45,6 +46,7 @@ app.use('/callback',callback);
 app.use('/login',login);
 app.use('/about',about);
 app.use('/register',register);
+app.use('/teachers',teachers);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
