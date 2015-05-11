@@ -2,33 +2,51 @@ body {
     padding: 54px 0px 20px;
     font: 14px"Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
 a {
     color: #777;
 }
+
 a:hover {
     text-decoration: none;
 }
+
 .navbar {
     margin-bottom: 0px;
 }
-.navbar-default{
+
+.navbar-default {
     background: #337ab7;
 }
-.navbar .navbar-brand{
-    color:yellowgreen;
+
+.navbar .navbar-brand {
+    color: yellowgreen;
 }
-.navbar-default .navbar-nav>li>a{
+
+.navbar .navbar-brand .logo {
+    display: block;
+    width: 256px;
+    height: 120px;
+    background: url('/images/logo.jpg?a=123');
+    margin-top: -16px;
+}
+
+.navbar-default .navbar-nav>li>a {
     font-size: 16px;
     color: #fff;
 }
-footer{
+
+footer {
     padding: 8px 0 0;
 }
-footer,footer a{
+
+footer,
+footer a {
     font-size: 16px;
-     color: #fff;
+    color: #fff;
 }
-#cnzz_stat_icon_1254960064{
+
+#cnzz_stat_icon_1254960064 {
     width: 1px;
     height: 1px;
     display: block;
