@@ -11,12 +11,13 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var classroom = require('./routes/class');
 var calendar = require('./routes/calendar');
-var calresult=require('./routes/calresult');
-var callback=require('./routes/callback');
-var login=require('./routes/login');
-var about=require('./routes/about');
-var register=require('./routes/register');
-var teachers=require('./routes/teachers');
+var calresult = require('./routes/calresult');
+var callback = require('./routes/callback');
+var login = require('./routes/login');
+var about = require('./routes/about');
+var register = require('./routes/register');
+var teachers = require('./routes/teachers');
+var test = require('./routes/test');
 
 var app = express();
 
@@ -42,11 +43,12 @@ app.use('/users', users);
 app.use('/class', classroom);
 app.use('/calendar', calendar);
 app.use('/calendarresult', calresult);
-app.use('/callback',callback);
-app.use('/login',login);
-app.use('/about',about);
-app.use('/register',register);
-app.use('/teachers',teachers);
+app.use('/callback', callback);
+app.use('/login', login);
+app.use('/about', about);
+app.use('/register', register);
+app.use('/teachers', teachers);
+app.use('/test', test);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
