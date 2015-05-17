@@ -1,25 +1,23 @@
-<!doctype html>
-<html ng-app>
-
-<head>
-    <script src="/bower_components/angular/angular.js"></script>
-</head>
-
-<body>
-    <div ng-controller="MyController">
-        <h1>Hello {{ clock }}!</h1>
+<% include header.html %>
+    <div class="container">
+        <h2>Test</h2>
+        <div class="row" ng-app="myApp">
+            <div class="col-md-12" ng-controller="MyController">
+                <h1>Hello {{ clock.now }}</h1>
+            </div>
+            <div>
+                <div class="col-md-12" ng-controller="FirstController">
+                    <h4>The simplest adding machine ever</h4>
+                    <button class="btn btn-success btn-xs" ng-click="add(1)">Add</button>
+                    <button class="btn btn-success btn-xs" ng-click="subtract(1)">Subtract</button>
+                    <h4>Current count:{{counter}}</h4>
+                </div>
+            </div>
+            <div class="col-md-12" ng-controller="MyController2">
+                <input type="text" ng-model="expr" placeholder="Enter an expression" />
+                <h4>{{parsedValue}}</h4>
+            </div>
+        </div>
     </div>
-    <script type="text/javascript">
-        function MyController($scope, $timeout) {
-            var updateClock = function () {
-                $scope.clock = new Date();
-                $timeout(function () {
-                    updateClock();
-                }, 1000);
-            };
-            updateClock();
-        };
-    </script>
-</body>
 
-</html>
+    <% include footer.html %>
