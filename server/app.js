@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 ejs = require('ejs');
-var http = require('http');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -17,6 +16,7 @@ var login = require('./routes/login');
 var about = require('./routes/about');
 var register = require('./routes/register');
 var teachers = require('./routes/teachers');
+var testchat = require('./routes/testchat');
 var test = require('./routes/test');
 
 var app = express();
@@ -34,6 +34,27 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+
+
+
+
+//var http = require('http').Server(app);
+//var io = require('socket.io')(http);
+//
+//io.on('connection', function (socket) {
+//    socket.on('chat message', function (msg) {
+//        io.emit('chat message', msg);
+//    });
+//});
+//
+//http.listen(3001, function () {
+//    console.log('listening on *:3001');
+//});
+
+
+
+
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/../public')));
 app.use('/bower_components', express.static(path.join(__dirname, '/../bower_components')));
@@ -49,6 +70,7 @@ app.use('/about', about);
 app.use('/register', register);
 app.use('/teachers', teachers);
 app.use('/test', test);
+app.use('/testchat', testchat);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
