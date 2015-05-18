@@ -18,6 +18,7 @@ var register = require('./routes/register');
 var teachers = require('./routes/teachers');
 var testchat = require('./routes/testchat');
 var test = require('./routes/test');
+var sendMail = require('./routes/sendmail');
 
 var app = express();
 
@@ -33,27 +34,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-
-
-
-
-
-//var http = require('http').Server(app);
-//var io = require('socket.io')(http);
-//
-//io.on('connection', function (socket) {
-//    socket.on('chat message', function (msg) {
-//        io.emit('chat message', msg);
-//    });
-//});
-//
-//http.listen(3001, function () {
-//    console.log('listening on *:3001');
-//});
-
-
-
-
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/../public')));
@@ -71,6 +51,7 @@ app.use('/register', register);
 app.use('/teachers', teachers);
 app.use('/test', test);
 app.use('/testchat', testchat);
+app.use('/sendmail', sendMail);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

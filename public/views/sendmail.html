@@ -1,0 +1,25 @@
+<% include header.html %>
+    <div class="container">
+        <h2>Send Email</h2>
+        <div class="row">
+            <div class="col-md-6 send-form">
+                <div class="form-group">
+                    <label class="lable">email to</label>
+                    <input type="text" class="form-control emailto" />
+                </div>
+                <div class="form-group">
+                    <label class="lable">subject</label>
+                    <input type="text" class="form-control emailsubject" />
+                </div>
+                <div class="form-group">
+                    <label class="lable">body</label>
+                    <textarea class="form-control emailbody"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" id="btn-send">Send Mail</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include footer.html %>
