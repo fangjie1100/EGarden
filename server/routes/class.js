@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 
-var conString = 'postgres://nhopjsddswsugl:UZBghjvpTcHj6SlXUJLcZ5zFSF@ec2-23-23-81-221.compute-1.amazonaws.com:5432/d1ckktjhmd70fh';
+var conString = 'postgres://nhopjsddswsugl:UZBghjvpTcHj6SlXUJLcZ5zFSF@ec2-23-23-81-221.compute-1.amazonaws.com:5432/d1ckktjhmd70fh?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory';
 
 var client = new pg.Client(conString);
 client.connect();
