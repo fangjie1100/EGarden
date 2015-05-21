@@ -21,15 +21,38 @@ passport.use(new QQStrategy({
     clientSecret: '5955ec423d2fd84d5a70020cbcbd6508',
     callbackURL: 'http://visaandpassport.cn/callback'
 }, function (accessToken, refreshToken, profile, done) {
-    console.log(profile);
+    console.log(profile);    
+      var user = {
+            id: profile.id,
+            username: profile.nickname
+        };
+     //return done(null, user);
+    console.log(user);
     process.nextTick(function () {
-        console.log('conme in');
-        return done(null, profile);
+      // To keep the example simple, the user's qq profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the qq account with a user record in your database,
+      // and return that user instead.
+      return done(null, user);
     });
+//    process.nextTick(function () {
+//        console.log('conme in');
+//        var user = {
+//            id: '1',
+//            username: 'admin',
+//            password: 'pass'
+//        };
+//        var temp=done(null, user);
+//        console.log('is ok');
+//        return temp;
+//    });
 }));
 
 
 var app = express();
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/auth/qq',
     passport.authenticate('qq'),
     function (req, res) {
@@ -47,6 +70,10 @@ app.use('/callback',
         console.log('login is ok');
         res.redirect('/');
     });
+
+app.get('/account', ensureAuthenticated, function(req, res){
+  res.send(JSON.stringify(req.user ) );
+});
 
 app.use('/logout', function (req, res) {
     req.logout();
@@ -74,8 +101,7 @@ var sendMail = require('./routes/sendmail');
 
 
 //app.use(express.session({ secret: 'keyboard cat' }));
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 // view engine setup
 app.set('views', path.join(__dirname, '/../public/views'));
@@ -149,10 +175,8 @@ app.use(function (err, req, res, next) {
 });
 
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/login')
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
 }
 
 
