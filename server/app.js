@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var passport = require('passport');
-var QQStrategy  = require('passport-qq').Strategy;
+var QQStrategy = require('passport-qq').Strategy;
 
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -30,23 +30,26 @@ passport.use(new QQStrategy({
 
 var app = express();
 app.use('/auth/qq',
-  passport.authenticate('qq'),
-  function(req, res){
-// The request will be redirected to qq for authentication, so this
-// function will not be called.
-});
+    passport.authenticate('qq'),
+    function (req, res) {
+        // The request will be redirected to qq for authentication, so this
+        // function will not be called.
+        res.redirect('/');
+    });
 
 
-app.use('/callback', 
-  passport.authenticate('qq', { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log('login is ok');
+app.use('/callback',
+    passport.authenticate('qq', {
+        failureRedirect: '/login'
+    }),
+    function (req, res) {
+        console.log('login is ok');
+        res.redirect('/');
+    });
+
+app.use('/logout', function (req, res) {
+    req.logout();
     res.redirect('/');
-  });
-
-app.use('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
 });
 
 
@@ -136,8 +139,10 @@ app.use(function (err, req, res, next) {
 });
 
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/login')
 }
 
 
