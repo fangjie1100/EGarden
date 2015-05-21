@@ -8,12 +8,12 @@ var ejs = require('ejs');
 var passport = require('passport');
 var QQStrategy = require('passport-qq').Strategy;
 
-passport.serializeUser(function (user, done) {
-    done(null, user);
+passport.serializeUser(function(user, done) {
+  done(null, user);
 });
 
-passport.deserializeUser(function (obj, done) {
-    done(null, obj);
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
 });
 
 passport.use(new QQStrategy({
@@ -23,6 +23,7 @@ passport.use(new QQStrategy({
 }, function (accessToken, refreshToken, profile, done) {
     console.log(profile);
     process.nextTick(function () {
+        console.log('conme in');
         return done(null, profile);
     });
 }));
@@ -88,6 +89,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+
+//
+//app.use(express.methodOverride());
+//app.use(express.cookieParser())
+//app.use(express.session({secret: 'blog.fens.me', cookie: { maxAge: 60000 }}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/../public')));
