@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -30,8 +31,27 @@ passport.use(new TqqStrategy({
 
 var app = express();
 
+
+
+
+app.use(logger());
+app.use(cookieParser());
+app.use(bodyParser());
+//app.use(methodOverride());
+app.use(session({
+    secret: 'keyboard cat',
+    cookie: {
+        maxAge: 60000
+    }
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 app.get('/auth/qq', function (req, res, next) {
     req.session = req.session || {};
@@ -48,6 +68,11 @@ app.get('/auth/qq', function (req, res, next) {
 // 通过比较认证返回的`state`状态值与服务器端`session`中的`state`状态值
 // 决定是否继续本次授权
 app.get('/callback', function (req, res, next) {
+        console.log(req.session);
+        console.log(req.session.authState);
+        console.log(req.session.authState);
+        console.log(req.query.state);
+
         if (req.session && req.session.authState && req.session.authState === req.query.state) {
             passport
                 .authenticate('qq', {
