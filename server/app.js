@@ -5,47 +5,32 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
+var crypto = require('crypto');
 var passport = require('passport');
-var QQStrategy = require('passport-qq').Strategy;
+var TqqStrategy = require('../lib/passport-tqq/').Strategy;
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
+passport.serializeUser(function (user, done) {
+    done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+passport.deserializeUser(function (obj, done) {
+    done(null, obj);
 });
 
-passport.use(new QQStrategy({
+passport.use(new TqqStrategy({
     clientID: '101211799',
     clientSecret: '5955ec423d2fd84d5a70020cbcbd6508',
     callbackURL: 'http://visaandpassport.cn/callback'
 }, function (accessToken, refreshToken, profile, done) {
-    console.log(profile);    
-      var user = {
-            id: profile.id,
-            username: profile.nickname
-        };
-     //return done(null, user);
+    console.log(profile);
+    var user = {
+        id: profile.id,
+        username: profile.nickname
+    };
     console.log(user);
     process.nextTick(function () {
-      // To keep the example simple, the user's qq profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the qq account with a user record in your database,
-      // and return that user instead.
-      return done(null, user);
+        return done(null, profile);
     });
-//    process.nextTick(function () {
-//        console.log('conme in');
-//        var user = {
-//            id: '1',
-//            username: 'admin',
-//            password: 'pass'
-//        };
-//        var temp=done(null, user);
-//        console.log('is ok');
-//        return temp;
-//    });
 }));
 
 
@@ -53,26 +38,39 @@ var app = express();
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/auth/qq',
-    passport.authenticate('qq'),
-    function (req, res) {
-        // The request will be redirected to qq for authentication, so this
-        // function will not be called.
-        res.redirect('/');
-    });
 
-
-app.use('/callback',
+app.get('/auth/qq', function (req, res, next) {
+    req.session = req.session || {};
+    req.session.authState = crypto.createHash('sha1')
+        .update(-(new Date()) + '')
+        .digest('hex');
     passport.authenticate('qq', {
-        failureRedirect: '/login'
-    }),
+        state: req.session.authState
+    })(req, res, next);
+});
+
+
+// GET /auth/qq/callback
+// 通过比较认证返回的`state`状态值与服务器端`session`中的`state`状态值
+// 决定是否继续本次授权
+app.get('/callback', function (req, res, next) {
+        if (req.session && req.session.authState && req.session.authState === req.query.state) {
+            passport
+                .authenticate('qq', {
+                    failureRedirect: '/'
+                })(req, res, next);
+        } else {
+            return next(new Error('Auth State Mismatch'));
+        }
+    },
     function (req, res) {
-        console.log('login is ok');
         res.redirect('/');
     });
 
-app.get('/account', ensureAuthenticated, function(req, res){
-  res.send(JSON.stringify(req.user ) );
+app.get('/account', ensureAuthenticated, function (req, res) {
+    res.render('account', {
+        user: req.user
+    });
 });
 
 app.use('/logout', function (req, res) {
@@ -175,8 +173,10 @@ app.use(function (err, req, res, next) {
 });
 
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/login')
 }
 
 
