@@ -22,12 +22,6 @@ passport.use(new TqqStrategy({
     clientSecret: '5955ec423d2fd84d5a70020cbcbd6508',
     callbackURL: 'http://visaandpassport.cn/callback'
 }, function (accessToken, refreshToken, profile, done) {
-    console.log(profile);
-    var user = {
-        id: profile.id,
-        username: profile.nickname
-    };
-    console.log(user);
     process.nextTick(function () {
         return done(null, profile);
     });
@@ -57,7 +51,7 @@ app.get('/callback', function (req, res, next) {
         if (req.session && req.session.authState && req.session.authState === req.query.state) {
             passport
                 .authenticate('qq', {
-                    failureRedirect: '/'
+                    failureRedirect: '/login'
                 })(req, res, next);
         } else {
             return next(new Error('Auth State Mismatch'));
