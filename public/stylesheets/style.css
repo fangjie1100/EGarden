@@ -25,9 +25,9 @@ a:hover {
 
 .navbar .navbar-brand .logo {
     display: block;
-    width: 256px;
-    height: 120px;
-    background: url('/images/logo.jpg?a=123');
+    width: 226px;
+    height: 80px;
+    background: url('/images/logo.png');
     margin-top: -16px;
 }
 
