@@ -28,12 +28,7 @@ passport.use(new TqqStrategy({
     });
 }));
 
-
 var app = express();
-
-
-
-
 app.use(logger());
 app.use(cookieParser());
 app.use(bodyParser());
@@ -48,11 +43,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
-//app.use(passport.initialize());
-//app.use(passport.session());
-
 app.get('/auth/qq', function (req, res, next) {
     req.session = req.session || {};
     req.session.authState = crypto.createHash('sha1')
@@ -62,7 +52,6 @@ app.get('/auth/qq', function (req, res, next) {
         state: req.session.authState
     })(req, res, next);
 });
-
 
 // GET /auth/qq/callback
 // 通过比较认证返回的`state`状态值与服务器端`session`中的`state`状态值
@@ -98,11 +87,6 @@ app.use('/logout', function (req, res) {
     res.redirect('/');
 });
 
-
-
-
-
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var classroom = require('./routes/class');
@@ -117,9 +101,7 @@ var testchat = require('./routes/testchat');
 var test = require('./routes/test');
 var sendMail = require('./routes/sendmail');
 
-
 //app.use(express.session({ secret: 'keyboard cat' }));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, '/../public/views'));
@@ -134,15 +116,8 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-
-//
-//app.use(express.methodOverride());
-//app.use(express.cookieParser())
-//app.use(express.session({secret: 'blog.fens.me', cookie: { maxAge: 60000 }}));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/../public')));
 app.use('/bower_components', express.static(path.join(__dirname, '/../bower_components')));
@@ -196,6 +171,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
+    
     res.redirect('/login')
 }
 
