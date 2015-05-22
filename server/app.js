@@ -83,7 +83,7 @@ app.get('/callback', function (req, res, next) {
         }
     },
     function (req, res) {
-        res.redirect('/');
+        res.redirect('/account');
     });
 
 app.get('/account', ensureAuthenticated, function (req, res) {

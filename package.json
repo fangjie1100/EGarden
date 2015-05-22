@@ -19,6 +19,7 @@
         "passport-tqq": "0.0.2",
         "passport-oauth": "~0.1.x",
         "express-session": "1.11.2",
+        "passport": "~0.1.x",
         "pg": "4.x"
     }
 }
