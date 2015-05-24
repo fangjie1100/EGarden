@@ -9,7 +9,9 @@ var ejs = require('ejs');
 var crypto = require('crypto');
 var passport = require('passport');
 var TqqStrategy = require('../lib/passport-tqq/').Strategy;
+var config = require('./config/config');
 
+console.log(config);
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
@@ -19,9 +21,9 @@ passport.deserializeUser(function (obj, done) {
 });
 
 passport.use(new TqqStrategy({
-    clientID: '101211799',
-    clientSecret: '5955ec423d2fd84d5a70020cbcbd6508',
-    callbackURL: 'http://visaandpassport.cn/callback'
+    clientID: config.QQPassportConfig.clientID,
+    clientSecret: config.QQPassportConfig.clientSecret,
+    callbackURL: config.QQPassportConfig.callbackURL
 }, function (accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
         return done(null, profile);
@@ -68,7 +70,11 @@ app.get('/callback', function (req, res, next) {
                     failureRedirect: '/login'
                 })(req, res, next);
         } else {
-            return next(new Error('Auth State Mismatch'));
+            //            return next(new Error('Auth State Mismatch'));
+            res.redirect('/error', {
+                message: '登陆失败',
+                error: '登陆失败，请重新检查一遍后再登陆试试'
+            });
         }
     },
     function (req, res) {
@@ -171,7 +177,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    
+
     res.redirect('/login')
 }
 
