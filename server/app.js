@@ -106,6 +106,7 @@ var teachers = require('./routes/teachers');
 var testchat = require('./routes/testchat');
 var test = require('./routes/test');
 var sendMail = require('./routes/sendmail');
+var videoList = require('./routes/videolist');
 
 //app.use(express.session({ secret: 'keyboard cat' }));
 
@@ -141,6 +142,7 @@ app.use('/teachers', teachers);
 app.use('/test', test);
 app.use('/testchat', testchat);
 app.use('/sendmail', sendMail);
+app.use('/videolist', videoList);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
